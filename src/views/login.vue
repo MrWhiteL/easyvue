@@ -34,6 +34,7 @@
 </template>
 <script>
   import {setToken,removeToken} from '@/utils/token';
+  import * as api from '@/api/login';
   export  default {
     data(){
       return{
@@ -52,12 +53,25 @@
       }
     },
     methods:{
+
       login(){
-        setToken("111111111");
-        //removeToken();
-        this.$router.push({
-          name: 'main'
-        });
+        this.$refs['login'].validate((valid) => {
+
+          if (valid) {
+            var params = {
+              'loginName': this.user.name,
+              'password': this.user.password,
+            }
+            api.login(params).then(({data}) => {
+                //console.log(data)
+                setToken(data.data.tooken)
+                this.$router.push({
+                  name: 'main'
+                });
+            })
+          }
+        })
+
       }
     }
   }

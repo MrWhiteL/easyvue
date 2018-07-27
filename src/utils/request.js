@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import axios from 'axios'
-import router from '@/router'
+import {router} from '@/router/index'
 import * as tokenUtils from "./token";
 import * as config from './sys-config'
 
-const url=config.host+config.port+config.server_context;
+const url="http://" +config.host+":"+config.port+config.server_context;
 
-// 创建axios实例
+// create axios instance
 const service = axios.create({
   baseURL:url,
   timeout: config.timeout,
@@ -16,7 +16,7 @@ const service = axios.create({
   }
 })
 
-// request拦截器
+// request  interceptor
 service.interceptors.request.use(config => {
   config.headers['token'] =tokenUtils.getToken()
   return config
@@ -24,13 +24,13 @@ service.interceptors.request.use(config => {
   return Promise.reject(error)
 })
 
-// response拦截器
+// response  interceptor
 service.interceptors.response.use(response => {
-  if (response.data && response.data.code === 401) { // 401, token失效
+  if (response.data && response.data.code === 401) { // 401, token invalid
     tokenUtils.removeToken()
     router.push({ name: 'login' })
   }
-  if (response.data && response.data.code === 403) { // 403, 无权限
+  if (response.data && response.data.code === 403) { // 403, no permission
     router.push({ name: 'login' })
   }
   return response

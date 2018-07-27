@@ -11,12 +11,11 @@ export const router = new Router({
 })
 
 router.beforeEach((to ,from,next)=>{
-//  console.log(getToken());
-  if(!getToken()){
+console.log(getToken());
+  if(to.name!=='login' && !getToken()){
     next({name:'login'})
   }else {
       next()
   }
-
 })
 

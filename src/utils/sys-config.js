@@ -4,6 +4,6 @@
  */
 export const host='192.168.0.19';
 export const port=8280;
-export const server_context='/easyvue';
+export const server_context='/easyviews';
 export const timeout=1000*30;
 
