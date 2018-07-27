@@ -33,6 +33,7 @@
   </div>
 </template>
 <script>
+  import {setToken,removeToken} from '@/utils/token';
   export  default {
     data(){
       return{
@@ -52,22 +53,21 @@
     },
     methods:{
       login(){
+        setToken("111111111");
+        //removeToken();
         this.$router.push({
           name: 'main'
         });
       }
     }
   }
-
-
 </script>
-
 
 <style lang="scss" scoped="" type="text/css">
   #login{
     width: 100%;
     height: 100%;
-    background-image: url(../assets/images/login.jpg);
+    background-image: url(../assets/images/login-bg.jpg);
     background-size: cover;
     background-position: 50%;
     position: relative;
@@ -79,6 +79,9 @@
       position: absolute;
       left: calc(50% - 150px);
       top:calc(50% - 130px);
+      .fa{
+        font-size: 16px;
+      }
     }
   }
 </style>

@@ -1,5 +1,7 @@
 <template>
-    $END$
+  <div>
+    403
+  </div>
 </template>
 
 <script>

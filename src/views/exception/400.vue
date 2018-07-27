@@ -1,5 +1,8 @@
 <template>
-    $END$
+  <div>
+    400
+  </div>
+
 </template>
 
 <script>
