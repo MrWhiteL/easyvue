@@ -1,6 +1,8 @@
 # easyvue
 
 > A Vue.js project
+这是一个学习项目
+主要参考iview-admin 和 element-admin
 
 ## Build Setup
 
