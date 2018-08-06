@@ -1,46 +1,73 @@
 <template>
-  <div id="ev-main">
-      欢迎
-    <Spin fix v-if="loading">
-    <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
-    <div>Loading</div>
-    </Spin>
-
+  <div class="ev-main ">
+      <Header>
+        <ev-header></ev-header>
+      </Header>
+      <div class="content">
+        <div class="side-menu" >
+          <Menu   active-name="home"  @on-select="menuSelected" class="menu">
+            <ev-menu v-for="(item,index) in routers" :item="item" :key="index"></ev-menu>
+          </Menu>
+        </div>
+        <div class="main-context">
+          <router-view/>
+        </div>
+      </div>
   </div>
 </template>
 <script>
+  import EvHeader from './header'
+  import {routers} from "../../router/router";
+  import EvMenu from './menu'
   export  default {
     data(){
       return{
-         loading:false
+         loading:false,
+         routers:routers
       }
     },
-    methods:{
-
+    components: {
+      EvHeader,
+      EvMenu,
     },
-    mounted:{
+    computed:{
+      //routerName: this.$router
+    },
+    methods:{
+      menuSelected(active){
+        this.$router.push({ name: active })
+      }
+    },
 
-    }
   }
 </script>
-<style lang="scss" scoped="" type="text/css">
-  #ev-main{
-    height: 200px;
+<style lang="scss" >
+  .ev-main{
+    height:100%;
     width: 100%;
-    background-color: antiquewhite;
     position: relative;
-  }
-  .demo-spin-icon-load{
-    animation: ani-demo-spin 1s linear infinite;
-  }
-  @keyframes ani-demo-spin {
-    from { transform: rotate(0deg);}
-    50%  { transform: rotate(180deg);}
-    to   { transform: rotate(360deg);}
-  }
-  .demo-spin-col{
-    height: 100px;
-    position: relative;
-    border: 1px solid #eee;
+    .content{
+      height: 100%;
+      .side-menu{
+        float: left;
+        width: 223px;
+        height: 100%;
+        overflow: hidden;
+        .menu{
+          height: 100%;
+          overflow: scroll
+        }
+      }
+      .main-context{
+        float: left;
+        width: calc(100% - 223px);
+        height: 100%;
+        background-color: #f0eef5;
+        padding: 15px;
+      }
+    }
+    .ivu-layout-header{
+      padding: 0;
+    }
   }
 </style>

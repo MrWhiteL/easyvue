@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import {getToken,removeToken} from '@/utils/token';
 import  {routers} from "./router";
+import {LoadingBar} from 'iview';
 
 Vue.use(Router)
 
@@ -11,7 +12,7 @@ export const router = new Router({
 })
 
 router.beforeEach((to ,from,next)=>{
-console.log(getToken());
+  LoadingBar.start();
   if(to.name!=='login' && !getToken()){
     next({name:'login'})
   }else {
@@ -19,3 +20,6 @@ console.log(getToken());
   }
 })
 
+router.afterEach(route => {
+  LoadingBar.finish();
+});

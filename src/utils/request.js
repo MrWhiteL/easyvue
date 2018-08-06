@@ -3,6 +3,7 @@ import axios from 'axios'
 import {router} from '@/router/index'
 import * as tokenUtils from "./token";
 import * as config from './sys-config'
+import {LoadingBar,Notice} from 'iview';
 
 const url="http://" +config.host+":"+config.port+config.server_context;
 
@@ -18,9 +19,11 @@ const service = axios.create({
 
 // request  interceptor
 service.interceptors.request.use(config => {
-  config.headers['token'] =tokenUtils.getToken()
+  config.headers['token'] =tokenUtils.getToken();
+  LoadingBar.start();
   return config
 }, error => {
+  LoadingBar.error();
   return Promise.reject(error)
 })
 
@@ -29,12 +32,21 @@ service.interceptors.response.use(response => {
   if (response.data && response.data.code === 401) { // 401, token invalid
     tokenUtils.removeToken()
     router.push({ name: 'login' })
-  }
-  if (response.data && response.data.code === 403) { // 403, no permission
+  }else if (response.data && response.data.code === 403) { // 403, no permission
     router.push({ name: 'login' })
+  }
+  if(response.data && response.data.code != 0){
+    LoadingBar.error();
+    Notice.error({
+      title: '提示',
+      desc: response.data.msg
+    });
+  }else {
+    LoadingBar.finish();
   }
   return response
 }, error => {
+  LoadingBar.error();
   return Promise.reject(error)
 })
 

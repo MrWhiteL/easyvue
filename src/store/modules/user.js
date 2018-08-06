@@ -1,4 +1,4 @@
-// import {mainRouter} from '../../router/router'
+
 const user = {
   state: {
     user: {},
@@ -33,18 +33,12 @@ const user = {
     getMenus: state => {
       if (state.menus.length == 0) {
         state.menus = JSON.parse(sessionStorage.getItem(['menus']));
-        // state.menus=[mainRouter]
       }
       return state.menus;
     }
   },
   actions: {
-    /*GenerateRoutes({ commit }, data) {
-      return new Promise(resolve => {
-        commit('SET_MENUS', data);
-        resolve()
-      })
-    }*/
+
   }
 }
 

@@ -64,7 +64,9 @@
             }
             api.login(params).then(({data}) => {
                 //console.log(data)
-                setToken(data.data.tooken)
+                setToken(data.data.tooken);
+                this.$store.commit('SET_MODULES', data.data.menu);
+                this.$store.commit('SET_USER', data.data.user);
                 this.$router.push({
                   name: 'main'
                 });

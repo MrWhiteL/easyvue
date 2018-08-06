@@ -1,5 +1,7 @@
 <template>
-    $END$
+    <div>
+      这个是系统首页
+    </div>
 </template>
 
 <script>
